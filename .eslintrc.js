@@ -1,39 +1,40 @@
 module.exports = {
-    'env': {
-        'browser': true,
-        'commonjs': true,
-        'es6': true,
-        'node': true,
-    },
-    "parser": "babel-eslint",
-    "extends": ["eslint:recommended", "plugin:react/recommended"],
-    'parserOptions': {
-        'sourceType': 'module',
-    },
-    'rules': {
+  'env': {
+    'browser': true,
+    'commonjs': true,
+    'es6': true,
+    'node': true,
+  },
+  "parser": "babel-eslint",
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  'parserOptions': {
+    'sourceType': 'module',
+  },
+  'rules': {
+    "react/prop-types": 0,
     'comma-dangle': [
-        'error',
-        'always-multiline',
+      'error',
+      'always-multiline',
     ],
     'indent': [
-        'error',
+      'error',
     2,
     ],
     'quotes': [
-        'error',
-        'single',
-        ],
+      'error',
+      'single',
+    ],
     'semi': [
-        'error',
-        'always',
-        ],
+      'error',
+      'always',
+    ],
     'no-unused-vars': [
-        'warn',
-        ],
+      'warn',
+    ],
     'no-console': 0,
-    },
-    'globals': {
-        '$': true,
-        'jQuery': true,
-       },
+  },
+  'globals': {
+    '$': true,
+    'jQuery': true,
+   },
 };
