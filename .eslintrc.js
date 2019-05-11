@@ -33,8 +33,4 @@ module.exports = {
     ],
     'no-console': 0,
   },
-  'globals': {
-    '$': true,
-    'jQuery': true,
-   },
 };

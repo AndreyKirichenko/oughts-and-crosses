@@ -1,6 +1,6 @@
 const initialState = {
   computer: 0,
-  user: 0
+  user: 0,
 };
 
 const score = (state, action) => {
@@ -9,20 +9,20 @@ const score = (state, action) => {
   }
 
   switch (action.type) {
-    case 'AWARD_TO_COMPUTER':
-      return {
-        computer: state.score.computer + 1,
-        user: state.score.computer
-      };
+  case 'AWARD_TO_COMPUTER':
+    return {
+      computer: state.score.computer + 1,
+      user: state.score.computer,
+    };
 
-    case 'AWARD_TO_USER':
-      return {
-        computer: state.score.computer,
-        user: state.score.computer + 1
-      };
+  case 'AWARD_TO_USER':
+    return {
+      computer: state.score.computer,
+      user: state.score.computer + 1,
+    };
 
-    default:
-      return state.score;
+  default:
+    return state.score;
   }
 };
 
