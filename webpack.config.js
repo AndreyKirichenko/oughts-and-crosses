@@ -28,6 +28,10 @@ const common = merge([
       filename: 'index.js'
     },
 
+    devServer: {
+      historyApiFallback: true,
+    },
+
     plugins: [
       new HtmlWebpackPlugin({
         template: './src/index.html'

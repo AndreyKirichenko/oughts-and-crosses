@@ -1,0 +1,59 @@
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.board__field {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 60px;
+  box-sizing: border-box;
+  border-bottom-width: 2px;
+  border-color: #007084;
+  border-right-width: 2px;
+  border-style: solid;
+  cursor: pointer;
+  height: 100px;
+  width: 100px;
+}
+
+.board__field:hover {
+  background-color: aliceblue;
+}
+
+.board__field--ought {
+  background-image: url('/img/ought.svg');
+}
+
+.board__field--cross {
+  background-image: url('/img/cross.svg');
+}
+
+.board--picker {
+  height: 100px;
+  width: 200px;
+
+  .board__field {
+    border-bottom-width: 0;
+  }
+
+  .board__field:last-child {
+    border-right-width: 0;
+  }
+}
+
+.board--game {
+  height: 300px;
+  width: 300px;
+
+  .board__field:nth-child(3n) {
+    border-right-width: 0;
+  }
+
+  .board__field:nth-child(7),
+  .board__field:nth-child(8),
+  .board__field:nth-child(9) {
+    border-bottom-width: 0;
+  }
+}

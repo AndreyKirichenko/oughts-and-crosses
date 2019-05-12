@@ -1,22 +1,24 @@
 import React from 'react';
-
-import Board from '../Board';
 import { Link } from 'react-router-dom';
 
-const PageGame = () => {
+import Picker from '../Picker';
+
+const PagePicker = () => {
   return (
     <div className='page'>
       <div className='page__content'>
-        <h1>User play cross</h1>
+        <h1>Pick your figure!</h1>
 
+        <p>
+          Cross go first.
+        </p>
 
-
-        <Board />
+        <Picker/>
 
         <ul className='menu'>
           <li className='menu__item'>
             <Link to='/' className='menu__link'>
-              continue this game later
+              back to menu
             </Link>
           </li>
         </ul>
@@ -25,4 +27,4 @@ const PageGame = () => {
   );
 };
 
-export default PageGame;
+export default PagePicker;

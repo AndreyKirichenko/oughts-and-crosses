@@ -1,16 +1,34 @@
-const awardToComputer = () => {
+// const fetchData = (dispatch) => () => {
+//   const preloadedState = JSON.parse(window.localStorage.getItem('state'));
+// };
+//
+// const awardToComputer = () => {
+//   return {
+//     type: 'AWARD_TO_COMPUTER'
+//   };
+// };
+//
+// const awardToUser = () => {
+//   return {
+//     type: 'AWARD_TO_USER',
+//   };
+// };
+
+const pickCross = () => {
   return {
-    type: 'AWARD_TO_COMPUTER'
-  }
+    type: 'PICK_CROSS',
+  };
 };
 
-const awardToUser = () => {
+const pickOught = () => {
   return {
-    type: 'AWARD_TO_USER'
-  }
+    type: 'PICK_OUGHT',
+  };
 };
 
 export {
-  awardToComputer,
-  awardToUser
+  // awardToComputer,
+  // awardToUser,
+  pickCross,
+  pickOught,
 };

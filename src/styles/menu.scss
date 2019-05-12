@@ -1,0 +1,19 @@
+.menu {
+  margin: 32px 0;
+  padding: 0;
+  text-align: center;
+}
+
+.menu__item {
+  margin-bottom: 8px;
+}
+
+.menu__link {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover {
+    color: orange;
+  }
+}

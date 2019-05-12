@@ -6,8 +6,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import store from '../../store';
 
 import PageStart from '../PageStart';
+import PagePicker from '../PagePicker';
 import PageGame from '../PageGame';
-import PageFinish from '../PageFinish';
+import PageScore from '../PageScore';
 
 import ErrorBoundary from '../ErrorBoundary';
 
@@ -18,9 +19,10 @@ class App extends Component {
         <ErrorBoundary>
           <Router>
             <Switch>
-              <Route path='/' component={PageStart} />
+              <Route path='/' component={PageStart} exact />
+              <Route path='/pick' component={PagePicker} />
               <Route path='/game' component={PageGame} />
-              <Route path='/finish' component={PageFinish} />
+              <Route path='/score' component={PageScore} />
             </Switch>
           </Router>
         </ErrorBoundary>
