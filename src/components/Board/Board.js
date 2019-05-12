@@ -1,56 +1,18 @@
 import React from 'react';
+import { gameLoop, userTurn } from '../../actions';
+import { connect } from 'react-redux';
 
 const Board = (props) => {
-  const fields = [
-    {
-      x: 0,
-      y: 0,
-      value: null,
-    },
-    {
-      x: 1,
-      y: 0,
-      value: null,
-    },
-    {
-      x: 2,
-      y: 0,
-      value: null,
-    },
-    {
-      x: 0,
-      y: 1,
-      value: null,
-    },
-    {
-      x: 1,
-      y: 1,
-      value: 'ought',
-    },
-    {
-      x: 2,
-      y: 1,
-      value: 'cross',
-    },
-    {
-      x: 0,
-      y: 2,
-      value: null,
-    },
-    {
-      x: 1,
-      y: 2,
-      value: null,
-    },
-    {
-      x: 2,
-      y: 2,
-      value: null,
-    },
-  ];
+  // console.log(props);
+  const { board, userTurn } = props;
+
+  const turn = (turnData) => {
+    console.log();
+    userTurn(turnData);
+  };
 
   const getFields = () => {
-    return fields.map((field) => {
+    return board.map((field) => {
       let className = 'board__field';
 
       const { x, y, value } = field;
@@ -58,8 +20,13 @@ const Board = (props) => {
       if (value) {
         className += ` board__field--${value}`;
       }
+
       return (
-        <div className={className} key={`${x}=${y}`} />
+        <div
+          className={className}
+          key={`${x}=${y}`}
+          onClick={() => { turn({ x, y }); }}
+        />
       );
     });
   };
@@ -71,4 +38,17 @@ const Board = (props) => {
   );
 };
 
-export default Board;
+const mapStateToProps = ({ game: { board } }) => {
+  return {
+    board,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    // gameLoop: () => dispatch(gameLoop(dispatch)),
+    userTurn: (turnData) => dispatch(userTurn(dispatch, turnData)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const PageScore = (props) => {
   const { computer, user } = props.score;
@@ -33,7 +33,6 @@ const PageScore = (props) => {
     </div>
   );
 };
-
 
 const mapStateToProps = ({ score }) => {
   return {

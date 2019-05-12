@@ -1,15 +1,19 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+
 import Board from '../Board';
 import { Link } from 'react-router-dom';
 
-const PageGame = () => {
+const PageGame = (props) => {
+  const { message } = props;
+
   return (
     <div className='page'>
       <div className='page__content'>
-        <h1>User play cross</h1>
+        <h1>Match!!!</h1>
 
-
+        <p>{message}</p>
 
         <Board />
 
@@ -25,4 +29,10 @@ const PageGame = () => {
   );
 };
 
-export default PageGame;
+const mapStateToProps = ({ game: { message } }) => {
+  return {
+    message,
+  };
+};
+
+export default connect(mapStateToProps, null)(PageGame);

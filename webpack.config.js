@@ -51,7 +51,6 @@ const common = merge([
 ]);
 
 module.exports = function(env, argv) {
-  console.log(argv.mode);
   if (argv.mode === 'development') {
     return merge([
       common,

@@ -26,9 +26,34 @@ const pickOught = () => {
   };
 };
 
+const startGame = () => {
+  return {
+    type: 'START_GAME',
+  };
+};
+
+const endGame = () => {
+  return {
+    type: 'END_GAME',
+  };
+};
+
+const gameLoop = (dispatch) => () => {
+
+};
+
+const userTurn = (dispatch, turnData) => {
+  return {
+    type: 'USER_TURN',
+    payload: turnData,
+  };
+};
+
 export {
   // awardToComputer,
   // awardToUser,
   pickCross,
   pickOught,
+  startGame,
+  userTurn,
 };

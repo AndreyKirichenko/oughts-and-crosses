@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { pickCross, pickOught } from '../../actions/';
+import { pickCross, pickOught, startGame } from '../../actions/';
 
 class Picker extends Component {
 
@@ -12,19 +12,21 @@ class Picker extends Component {
 
   onCross = () => {
     this.props.pickCross();
-
-    this.setState({
-      isPicked: true,
-    });
+    this.startGame();
   };
 
   onOught = () => {
     this.props.pickOught();
+    this.startGame();
+  };
+
+  startGame() {
+    this.props.startGame();
 
     this.setState({
       isPicked: true,
     });
-  };
+  }
 
   render() {
     if(this.state.isPicked) {
@@ -50,6 +52,7 @@ class Picker extends Component {
 const mapDispatchToProps = {
   pickCross,
   pickOught,
+  startGame,
 };
 
 export default connect(null, mapDispatchToProps)(Picker);
