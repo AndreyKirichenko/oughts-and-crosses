@@ -32,19 +32,28 @@ const startGame = () => {
   };
 };
 
-const endGame = () => {
+// const endGame = () => {
+//   return {
+//     type: 'END_GAME',
+//   };
+// };
+
+const gameLoop = (dispatch, game) => () => {
+  console.log('gameLoop', game);
+
+  // dispatch(computerTurn({ x: 0, y: 0 }));
+};
+
+const userTurn = (turnData) => {
   return {
-    type: 'END_GAME',
+    type: 'USER_TURN',
+    payload: turnData,
   };
 };
 
-const gameLoop = (dispatch) => () => {
-
-};
-
-const userTurn = (dispatch, turnData) => {
+const computerTurn = (turnData) => {
   return {
-    type: 'USER_TURN',
+    type: 'COMPUTER_TURN',
     payload: turnData,
   };
 };
@@ -56,4 +65,5 @@ export {
   pickOught,
   startGame,
   userTurn,
+  gameLoop,
 };

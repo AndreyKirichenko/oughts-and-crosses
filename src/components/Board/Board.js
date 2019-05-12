@@ -1,15 +1,13 @@
-import React from 'react';
-import { gameLoop, userTurn } from '../../actions';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+
+import { gameLoop, userTurn } from '../../actions';
+
+const GAME_TIMEOUT = 1000;
 
 const Board = (props) => {
-  // console.log(props);
   const { board, userTurn } = props;
-
-  const turn = (turnData) => {
-    console.log();
-    userTurn(turnData);
-  };
 
   const getFields = () => {
     return board.map((field) => {
@@ -25,7 +23,7 @@ const Board = (props) => {
         <div
           className={className}
           key={`${x}=${y}`}
-          onClick={() => { turn({ x, y }); }}
+          onClick={() => { userTurn({ x, y }); }}
         />
       );
     });
@@ -38,17 +36,42 @@ const Board = (props) => {
   );
 };
 
-const mapStateToProps = ({ game: { board } }) => {
+class BoardContainer extends Component {
+  componentDidMount() {
+    this.interval = setTimeout(() => {
+      this.props.gameLoop(this.props.game);
+    }, GAME_TIMEOUT);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  render() {
+    const { userTurn } = this.props;
+
+    const { board, isStarted } = this.props.game;
+
+
+    if(!isStarted) {
+      return <Redirect to='/pick' />;
+    }
+
+    return <Board board={board} userTurn={userTurn} />;
+  }
+}
+
+const mapStateToProps = ({ game }) => {
   return {
-    board,
+    game,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // gameLoop: () => dispatch(gameLoop(dispatch)),
-    userTurn: (turnData) => dispatch(userTurn(dispatch, turnData)),
+    gameLoop: (game) => dispatch(gameLoop(dispatch, game)),
+    userTurn: (turnData) => dispatch(userTurn(turnData)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Board);
+export default connect(mapStateToProps, mapDispatchToProps)(BoardContainer);

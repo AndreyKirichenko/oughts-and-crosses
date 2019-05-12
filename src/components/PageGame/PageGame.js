@@ -11,7 +11,7 @@ const PageGame = (props) => {
   return (
     <div className='page'>
       <div className='page__content'>
-        <h1>Match!!!</h1>
+        <h1>Match!</h1>
 
         <p>{message}</p>
 
@@ -29,8 +29,9 @@ const PageGame = (props) => {
   );
 };
 
-const mapStateToProps = ({ game: { message } }) => {
+const mapStateToProps = ({ game: { message, isStarted } }) => {
   return {
+    isStarted,
     message,
   };
 };

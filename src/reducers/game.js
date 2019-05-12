@@ -25,7 +25,12 @@ const initialState = {
 };
 
 const startGame = (game) => {
-  const message = `You play ${game.user}`;
+  let message = `You play ${game.user}.`;
+
+  if(!game.isUserTurns) {
+    message += ' Computer is going first...';
+  }
+
   return {
     ...game,
     board: getEmptyBoard(),
@@ -35,7 +40,6 @@ const startGame = (game) => {
 };
 
 const userTurn = (game, turnData) => {
-  console.log(turnData, game.user);
   const { board, isUserTurns } = game;
 
   if(!isUserTurns) {
@@ -73,17 +77,16 @@ const userTurn = (game, turnData) => {
   };
 };
 
+const computerTurn = () => {
+  console.log('!computerTurn');
+};
+
 const getFieldIndex = (board, turnData) => {
   return board.findIndex((field) => {
 
     return field.x === turnData.x && field.y === turnData.y;
   });
 };
-
-const updateBoard = (board, x, y) => {
-
-};
-
 
 const score = (state, action) => {
   if(state === undefined) {
@@ -120,6 +123,9 @@ const score = (state, action) => {
 
   case 'USER_TURN':
     return userTurn(state.game, action.payload);
+
+  case 'COMPUTER_TURN':
+    return computerTurn(state.game, action.payload);
 
   default:
     return state.game;
