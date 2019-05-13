@@ -5,17 +5,28 @@
 }
 
 .board__field {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 60px;
+  align-items: center;
+
   box-sizing: border-box;
   border-bottom-width: 2px;
   border-color: #007084;
   border-right-width: 2px;
   border-style: solid;
   cursor: pointer;
+  display: flex;
   height: 100px;
+  justify-content: center;
   width: 100px;
+
+  &:before {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 60px;
+    content: '';
+    display: block;
+    height: 60px;
+    width: 60px;
+  }
 }
 
 .board__field:hover {
@@ -23,11 +34,21 @@
 }
 
 .board__field--ought {
-  background-image: url('/img/ought.svg');
+  &:before {
+    background-image: url('/img/ought.svg');
+  }
 }
 
 .board__field--cross {
-  background-image: url('/img/cross.svg');
+  &:before {
+    background-image: url('/img/cross.svg');
+  }
+}
+
+.board__field--winner {
+  &:before {
+    transform: scale(1.2, 1.2);
+  }
 }
 
 .board--picker {
