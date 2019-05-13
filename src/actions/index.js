@@ -39,9 +39,8 @@ const startGame = () => {
 // };
 
 const gameLoop = (dispatch, game) => () => {
-  console.log('gameLoop', game);
-
-  // dispatch(computerTurn({ x: 0, y: 0 }));
+  console.log('game', game);
+  dispatch(computerTurn({ x: 0, y: 0 }));
 };
 
 const userTurn = (turnData) => {

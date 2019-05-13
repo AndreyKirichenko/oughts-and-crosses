@@ -77,8 +77,8 @@ const userTurn = (game, turnData) => {
   };
 };
 
-const computerTurn = () => {
-  console.log('!computerTurn');
+const computerTurn = (game, turnData) => {
+  console.log('!computerTurn', turnData);
 };
 
 const getFieldIndex = (board, turnData) => {
@@ -111,7 +111,6 @@ const score = (state, action) => {
     };
 
   case 'START_GAME':
-    console.log('start game');
     return startGame(state.game);
 
   case 'END_GAME':
