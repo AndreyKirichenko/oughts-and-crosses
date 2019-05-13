@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import { gameLoop, userTurn } from '../../actions';
 
-const GAME_TIMEOUT = 1000;
+const GAME_TIMEOUT = 200;
 
 const Board = (props) => {
   const { board, userTurn } = props;

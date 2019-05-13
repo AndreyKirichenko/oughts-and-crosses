@@ -1,18 +1,18 @@
-import  { computer as computerPlayer } from '../services/computer';
-import referee from '../services/referee';
+import  Computer from '../services/Computer';
+import Referee from '../services/Referee';
 
 
-// const awardToComputer = () => {
-//   return {
-//     type: 'AWARD_TO_COMPUTER'
-//   };
-// };
-//
-// const awardToUser = () => {
-//   return {
-//     type: 'AWARD_TO_USER',
-//   };
-// };
+const awardToComputer = () => {
+  return {
+    type: 'AWARD_TO_COMPUTER',
+  };
+};
+
+const awardToUser = () => {
+  return {
+    type: 'AWARD_TO_USER',
+  };
+};
 
 const pickCross = () => {
   return {
@@ -32,24 +32,46 @@ const startGame = () => {
   };
 };
 
-// const endGame = () => {
-//   return {
-//     type: 'END_GAME',
-//   };
-// };
+const endGameInTie = () => {
+  return {
+    type: 'END_GAME_IN_TIE',
+  };
+};
+
+const endGameWithUserWin = () => {
+  return {
+    type: 'END_GAME_WITH_USER_WIN',
+  };
+};
+
+const endGameWithComputerWin = () => {
+  return {
+    type: 'END_GAME_WITH_COMPUTER_WIN',
+  };
+};
 
 const gameLoop = (dispatch, game) => () => {
-  const { board, computer, isChecked, isUserTurns } = game;
+  const { board, isChecked, isUserTurns, isFinished } = game;
 
-  if(isChecked && !isUserTurns) {
-    const newTurn = computerPlayer(board, computer);
-    dispatch(computerTurn(newTurn));
+  if(isFinished) {
+    return;
   }
 
-  if(!isChecked) {
-    const result = referee(board);
-    if(result.length) {
-      console.log('win', result);
+  if(isChecked && !isUserTurns) {
+    const newTurn = Computer.turn(board);
+    dispatch(computerTurn(newTurn));
+  } else {
+    const result = Referee.ump(board);
+    const { win, tie } = result;
+
+    if(tie) {
+      dispatch(endGameInTie());
+    } else if(win && win.winner === game.userRole){
+      dispatch(endGameWithUserWin());
+      dispatch(awardToUser());
+    } else if(win && win.winner === game.computerRole) {
+      dispatch(endGameWithComputerWin());
+      dispatch(awardToComputer());
     } else {
       dispatch(refereeTurn());
     }
@@ -77,8 +99,6 @@ const refereeTurn = () => {
 };
 
 export {
-  // awardToComputer,
-  // awardToUser,
   pickCross,
   pickOught,
   startGame,

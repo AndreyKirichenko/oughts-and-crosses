@@ -7,6 +7,7 @@ const getEmptyBoard = () => {
         x,
         y,
         value: null,
+        winner: false,
       });
     }
   }
@@ -16,16 +17,17 @@ const getEmptyBoard = () => {
 
 const initialState = {
   board: getEmptyBoard(),
-  computer: 'ought',
+  computerRole: 'ought',
+  isChecked: true,
+  isFinished: false,
   isStarted: false,
   isUserTurns: true,
-  isChecked: true,
   message: 'Let\'s play!',
-  user: 'cross',
+  userRole: 'cross',
 };
 
 const startGame = (game) => {
-  let message = `You play ${game.user}.`;
+  let message = `You play ${game.userRole}.`;
 
   if(!game.isUserTurns) {
     message += ' Computer is going first...';
@@ -35,20 +37,45 @@ const startGame = (game) => {
     ...game,
     board: getEmptyBoard(),
     isStarted: true,
+    isFinished: false,
     message,
   };
 };
 
-const userTurn = (game, turnData) => {
-  const { board, isUserTurns, user } = game;
+const endGameInTie = (game) => {
+  return {
+    ...game,
+    isFinished: true,
+    message: 'Game finished in tie',
+  };
+};
 
-  if(!isUserTurns) {
+const endGameWithUserWin = (game) => {
+  return {
+    ...game,
+    isFinished: true,
+    message: 'You won!',
+  };
+};
+
+const endGameWithComputerWin = (game) => {
+  return {
+    ...game,
+    isFinished: true,
+    message: 'You loose!',
+  };
+};
+
+const userTurn = (game, turnData) => {
+  const { board, isUserTurns, userRole, isFinished } = game;
+
+  if(!isUserTurns || isFinished) {
     return {
       ...game,
     };
   }
 
-  const newBoard = getNewTurnBoard(board, turnData, user);
+  const newBoard = getNewTurnBoard(board, turnData, userRole);
 
   if(!newBoard) {
     return {
@@ -67,15 +94,15 @@ const userTurn = (game, turnData) => {
 };
 
 const computerTurn = (game, turnData) => {
-  const { board, isUserTurns, computer } = game;
+  const { board, isUserTurns, computerRole, isFinished } = game;
 
-  if(isUserTurns) {
+  if(isUserTurns || isFinished) {
     return {
       ...game,
     };
   }
 
-  const newBoard = getNewTurnBoard(board, turnData, computer);
+  const newBoard = getNewTurnBoard(board, turnData, computerRole);
 
   if(!newBoard) {
     return {
@@ -121,7 +148,6 @@ const getNewTurnBoard = (board, turnData, fieldValue) => {
 
 const getFieldIndex = (board, turnData) => {
   return board.findIndex((field) => {
-
     return field.x === turnData.x && field.y === turnData.y;
   });
 };
@@ -135,28 +161,30 @@ const score = (state, action) => {
   case 'PICK_CROSS':
     return {
       ...state.game,
-      computer: 'ought',
-      user: 'cross',
+      computerRole: 'ought',
+      userRole: 'cross',
       isUserTurns: true,
     };
 
   case 'PICK_OUGHT':
     return {
       ...state.game,
-      computer: 'cross',
-      user: 'ought',
+      computerRole: 'cross',
+      userRole: 'ought',
       isUserTurns: false,
     };
 
   case 'START_GAME':
     return startGame(state.game);
 
-  case 'END_GAME':
-    return {
-      ...state.game,
-      isStarted: false,
-      message: action.payload ? 'You are winner!' : 'Game over',
-    };
+  case 'END_GAME_IN_TIE':
+    return endGameInTie(state.game);
+
+  case 'END_GAME_WITH_USER_WIN':
+    return endGameWithUserWin(state.game);
+
+  case 'END_GAME_WITH_COMPUTER_WIN':
+    return endGameWithComputerWin(state.game);
 
   case 'USER_TURN':
     return userTurn(state.game, action.payload);
