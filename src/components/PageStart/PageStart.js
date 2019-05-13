@@ -1,7 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const PageStart = () => {
+
+const PageStart = (props) => {
+  const getContinue = () => {
+    const { isFinished, isStarted } = props.game;
+
+    if(isStarted && !isFinished) {
+      return (
+        <li className='menu__item'>
+          <Link to='/game' className='menu__link'>
+            Continue
+          </Link>
+        </li>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div className='page'>
       <div className='page__content'>
@@ -16,11 +34,7 @@ const PageStart = () => {
             </Link>
           </li>
 
-          <li className='menu__item'>
-            <Link to='/game' className='menu__link'>
-              Continue
-            </Link>
-          </li>
+          {getContinue()}
 
           <li className='menu__item'>
             <Link to='/score' className='menu__link'>
@@ -33,4 +47,11 @@ const PageStart = () => {
   );
 };
 
-export default PageStart;
+const mapStateToProps = ({ game }) => {
+  return {
+    game,
+  };
+};
+
+export default connect(mapStateToProps, null)(PageStart);
+

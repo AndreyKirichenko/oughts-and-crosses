@@ -6,7 +6,33 @@ import Board from '../Board';
 import { Link } from 'react-router-dom';
 
 const PageGame = (props) => {
-  const { message } = props;
+  const { message, isFinished, isStarted } = props;
+
+  const getPlayAgain = () => {
+    if(isFinished) {
+      return (
+        <li className='menu__item'>
+          <Link to='/pick' className='menu__link'>
+            Play Again
+          </Link>
+        </li>
+      );
+    }
+    return null;
+  };
+
+  const getContinueLater = () => {
+    if(isStarted && !isFinished) {
+      return (
+        <li className='menu__item'>
+          <Link to='/' className='menu__link'>
+            Continue later
+          </Link>
+        </li>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className='page'>
@@ -18,9 +44,11 @@ const PageGame = (props) => {
         <Board />
 
         <ul className='menu'>
+          {getPlayAgain()}
+          {getContinueLater()}
           <li className='menu__item'>
-            <Link to='/' className='menu__link'>
-              continue this game later
+            <Link to='/Score' className='menu__link'>
+              Score
             </Link>
           </li>
         </ul>
@@ -29,10 +57,11 @@ const PageGame = (props) => {
   );
 };
 
-const mapStateToProps = ({ game: { message, isStarted } }) => {
+const mapStateToProps = ({ game: { message, isStarted, isFinished } }) => {
   return {
-    isStarted,
     message,
+    isFinished,
+    isStarted,
   };
 };
 
