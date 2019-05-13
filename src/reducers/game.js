@@ -19,7 +19,7 @@ const initialState = {
   computer: 'ought',
   isStarted: false,
   isUserTurns: true,
-  isChecked: false,
+  isChecked: true,
   message: 'Let\'s play!',
   user: 'cross',
 };
@@ -61,6 +61,7 @@ const userTurn = (game, turnData) => {
     ...game,
     board: newBoard,
     isUserTurns: false,
+    isChecked: false,
     message: 'Computer thinks...',
   };
 };
@@ -86,7 +87,15 @@ const computerTurn = (game, turnData) => {
     ...game,
     board: newBoard,
     isUserTurns: true,
+    isChecked: false,
     message: 'Your turn...',
+  };
+};
+
+const refereeTurn = (game) => {
+  return {
+    ...game,
+    isChecked: true,
   };
 };
 
@@ -154,6 +163,9 @@ const score = (state, action) => {
 
   case 'COMPUTER_TURN':
     return computerTurn(state.game, action.payload);
+
+  case 'REFEREE_TURN':
+    return refereeTurn(state.game);
 
   default:
     return state.game;

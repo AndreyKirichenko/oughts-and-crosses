@@ -1,9 +1,7 @@
-import computer from '../services/computer';
+import  { computer as computerPlayer } from '../services/computer';
+import referee from '../services/referee';
 
-// const fetchData = (dispatch) => () => {
-//   const preloadedState = JSON.parse(window.localStorage.getItem('state'));
-// };
-//
+
 // const awardToComputer = () => {
 //   return {
 //     type: 'AWARD_TO_COMPUTER'
@@ -41,8 +39,21 @@ const startGame = () => {
 // };
 
 const gameLoop = (dispatch, game) => () => {
-  const newTurn = computer(game.board, game.computer);
-  dispatch(computerTurn(newTurn));
+  const { board, computer, isChecked, isUserTurns } = game;
+
+  if(isChecked && !isUserTurns) {
+    const newTurn = computerPlayer(board, computer);
+    dispatch(computerTurn(newTurn));
+  }
+
+  if(!isChecked) {
+    const result = referee(board);
+    if(result.length) {
+      console.log('win', result);
+    } else {
+      dispatch(refereeTurn());
+    }
+  }
 };
 
 const userTurn = (turnData) => {
@@ -56,6 +67,12 @@ const computerTurn = (turnData) => {
   return {
     type: 'COMPUTER_TURN',
     payload: turnData,
+  };
+};
+
+const refereeTurn = () => {
+  return {
+    type: 'REFEREE_TURN',
   };
 };
 

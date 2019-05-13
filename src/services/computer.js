@@ -1,5 +1,4 @@
 const computer = (board) => {
-
   const emptyFields = findEmptyFields(board);
 
   const randomIndex = Math.round(Math.random() * (emptyFields.length - 1));
@@ -15,4 +14,4 @@ const findEmptyFields = (board) => {
   });
 };
 
-export default computer;
+export { computer };
