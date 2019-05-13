@@ -1,9 +1,14 @@
 import React from 'react';
+import { compose } from 'redux';
 import { Link } from 'react-router-dom';
 
 import Picker from '../Picker';
+import { fetchData } from '../../actions';
+import withPage from '../HOC/withPage';
+import {connect} from 'react-redux';
 
 const PagePicker = () => {
+
   return (
     <div className='page'>
       <div className='page__content'>
@@ -27,4 +32,13 @@ const PagePicker = () => {
   );
 };
 
-export default PagePicker;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: () => dispatch(fetchData(dispatch)),
+  };
+};
+
+export default compose(
+  connect(null, mapDispatchToProps),
+  withPage,
+)(PagePicker);

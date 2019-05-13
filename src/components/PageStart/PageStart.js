@@ -1,11 +1,17 @@
 import React from 'react';
+import { compose } from 'redux';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+import withPage from '../HOC/withPage';
+import { fetchData } from '../../actions';
 
 
 const PageStart = (props) => {
   const getContinue = () => {
     const { isFinished, isStarted } = props.game;
+
+
 
     if(isStarted && !isFinished) {
       return (
@@ -53,5 +59,13 @@ const mapStateToProps = ({ game }) => {
   };
 };
 
-export default connect(mapStateToProps, null)(PageStart);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: () => dispatch(fetchData(dispatch)),
+  };
+};
 
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withPage,
+)(PageStart);

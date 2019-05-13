@@ -100,10 +100,39 @@ const refereeTurn = () => {
   };
 };
 
+const fetchGame = (game) => {
+  return {
+    type: 'FETCH_GAME',
+    payload: game,
+  };
+};
+
+const fetchScore = (score) => {
+  return {
+    type: 'FETCH_SCORE',
+    payload: score,
+  };
+};
+
+const fetchData = (dispatch) => {
+  const data = JSON.parse(window.localStorage.getItem('state'));
+
+  if(data) {
+    const { game, score } = data;
+    dispatch(fetchGame(game));
+    dispatch(fetchScore(score));
+  }
+
+  return {
+    type: '',
+  };
+};
+
 export {
   pickCross,
   pickOught,
   startGame,
   userTurn,
   gameLoop,
+  fetchData,
 };

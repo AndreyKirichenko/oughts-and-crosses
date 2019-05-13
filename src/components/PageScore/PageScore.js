@@ -1,6 +1,10 @@
 import React from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import { fetchData } from '../../actions';
+import withPage from '../HOC/withPage';
 
 const PageScore = (props) => {
   const { computer, user } = props.score;
@@ -40,4 +44,13 @@ const mapStateToProps = ({ score }) => {
   };
 };
 
-export default connect(mapStateToProps, null)(PageScore);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: () => dispatch(fetchData(dispatch)),
+  };
+};
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withPage,
+)(PageScore);

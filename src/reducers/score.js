@@ -9,6 +9,11 @@ const score = (state, action) => {
   }
 
   switch (action.type) {
+  case 'FETCH_SCORE':
+    return {
+      ...action.payload,
+    };
+
   case 'AWARD_TO_COMPUTER':
     return {
       computer: state.score.computer + 1,

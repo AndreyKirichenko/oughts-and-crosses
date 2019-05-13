@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 
 import { gameLoop, userTurn } from '../../actions';
 
-const GAME_TIMEOUT = 200;
+const GAME_TIMEOUT = 500;
 
 const Board = (props) => {
   const { board, userTurn } = props;
@@ -47,19 +46,20 @@ class BoardContainer extends Component {
     }, GAME_TIMEOUT);
   }
 
+  shouldComponentUpdate(nextProps) {
+    const isUserTurnsChanged = !this.props.game.isUserTurns === nextProps.game.isUserTurns;
+    const isFinishedChanged = !this.props.game.isFinished === nextProps.game.isFinished;
+    const isStartedChanged = !this.props.game.isStarted === nextProps.game.isStarted;
+
+    return isStartedChanged || isUserTurnsChanged || isFinishedChanged;
+  }
+
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
   render() {
-    const { userTurn } = this.props;
-
-    const { board, isStarted } = this.props.game;
-
-
-    if(!isStarted) {
-      return <Redirect to='/pick' />;
-    }
+    const { userTurn, game: { board } } = this.props;
 
     return <Board board={board} userTurn={userTurn} />;
   }

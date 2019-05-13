@@ -12,6 +12,11 @@ import PageScore from '../PageScore';
 
 import ErrorBoundary from '../ErrorBoundary';
 
+store.subscribe(() => {
+  const stateToPersist = JSON.stringify(store.getState());
+  window.localStorage.setItem('state', stateToPersist);
+});
+
 class App extends Component {
   render() {
     return (

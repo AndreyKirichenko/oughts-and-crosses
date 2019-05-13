@@ -173,6 +173,12 @@ const score = (state, action) => {
   }
 
   switch (action.type) {
+
+  case 'FETCH_GAME':
+    return {
+      ...action.payload,
+    };
+
   case 'PICK_CROSS':
     return {
       ...state.game,

@@ -1,9 +1,12 @@
 import React from 'react';
-
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import Board from '../Board';
 import { Link } from 'react-router-dom';
+
+import { fetchData } from '../../actions';
+import withPage from '../HOC/withPage';
 
 const PageGame = (props) => {
   const { message, isFinished, isStarted } = props;
@@ -65,4 +68,13 @@ const mapStateToProps = ({ game: { message, isStarted, isFinished } }) => {
   };
 };
 
-export default connect(mapStateToProps, null)(PageGame);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: () => dispatch(fetchData(dispatch)),
+  };
+};
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withPage,
+)(PageGame);
