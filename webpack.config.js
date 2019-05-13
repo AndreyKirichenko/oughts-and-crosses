@@ -39,7 +39,6 @@ const common = merge([
 
       new CopyWebpackPlugin([
         { from: 'src/img/', to: 'img/', force: true },
-        { from: 'src/fonts/', to: 'fonts/', force: true },
         { from: 'src/robots.txt', to: '', force: true }
       ], {})
     ]
