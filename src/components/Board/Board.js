@@ -13,10 +13,14 @@ const Board = (props) => {
     return board.map((field) => {
       let className = 'board__field';
 
-      const { x, y, value } = field;
+      const { x, y, value, winner } = field;
 
-      if (value) {
+      if(value) {
         className += ` board__field--${value}`;
+      }
+
+      if(winner) {
+        className += ' board__field--winner';
       }
 
       return (

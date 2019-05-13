@@ -38,15 +38,17 @@ const endGameInTie = () => {
   };
 };
 
-const endGameWithUserWin = () => {
+const endGameWithUserWin = (winnerLines) => {
   return {
     type: 'END_GAME_WITH_USER_WIN',
+    payload: winnerLines,
   };
 };
 
-const endGameWithComputerWin = () => {
+const endGameWithComputerWin = (winnerLines) => {
   return {
     type: 'END_GAME_WITH_COMPUTER_WIN',
+    payload: winnerLines,
   };
 };
 
@@ -67,10 +69,10 @@ const gameLoop = (dispatch, game) => () => {
     if(tie) {
       dispatch(endGameInTie());
     } else if(win && win.winner === game.userRole){
-      dispatch(endGameWithUserWin());
+      dispatch(endGameWithUserWin(win.winnerLines[0]));
       dispatch(awardToUser());
     } else if(win && win.winner === game.computerRole) {
-      dispatch(endGameWithComputerWin());
+      dispatch(endGameWithComputerWin(win.winnerLines[0]));
       dispatch(awardToComputer());
     } else {
       dispatch(refereeTurn());

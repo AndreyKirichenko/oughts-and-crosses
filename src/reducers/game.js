@@ -50,20 +50,35 @@ const endGameInTie = (game) => {
   };
 };
 
-const endGameWithUserWin = (game) => {
+const endGameWithUserWin = (game, winnerLine) => {
+  return endGameWithWin(game, winnerLine, 'You won!');
+};
+
+const endGameWithComputerWin = (game, winnerLine) => {
+  return endGameWithWin(game, winnerLine, 'You loose!');
+};
+
+const endGameWithWin = (game, winnerLine, message) => {
+  const { board } = game;
+  const newBoard = markWinnerFields(board, winnerLine);
+
   return {
     ...game,
+    board: newBoard,
     isFinished: true,
-    message: 'You won!',
+    message,
   };
 };
 
-const endGameWithComputerWin = (game) => {
-  return {
-    ...game,
-    isFinished: true,
-    message: 'You loose!',
-  };
+const markWinnerFields = (board, winnerLine) => {
+  return board.map((field) => {
+    winnerLine.forEach((winnerField) => {
+      if(winnerField.x === field.x && winnerField.y === field.y) {
+        field.winner = true;
+      }
+    });
+    return field;
+  });
 };
 
 const userTurn = (game, turnData) => {
@@ -181,10 +196,10 @@ const score = (state, action) => {
     return endGameInTie(state.game);
 
   case 'END_GAME_WITH_USER_WIN':
-    return endGameWithUserWin(state.game);
+    return endGameWithUserWin(state.game, action.payload);
 
   case 'END_GAME_WITH_COMPUTER_WIN':
-    return endGameWithComputerWin(state.game);
+    return endGameWithComputerWin(state.game, action.payload);
 
   case 'USER_TURN':
     return userTurn(state.game, action.payload);

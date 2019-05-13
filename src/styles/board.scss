@@ -45,9 +45,21 @@
   }
 }
 
+@keyframes winner {
+  from {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.2, 1.2);
+  }
+  to {
+    transform: scale(1, 1);
+  }
+}
+
 .board__field--winner {
   &:before {
-    transform: scale(1.2, 1.2);
+    animation: winner  1s infinite ease-in-out;
   }
 }
 
