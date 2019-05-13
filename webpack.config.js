@@ -6,7 +6,6 @@ let CopyWebpackPlugin = require('copy-webpack-plugin');
 const js = require('./webpack/js');
 const css = require('./webpack/css');
 const favicon = require('./webpack/favicon');
-const webworker = require('./webpack/webworker');
 const nodeEnv = require('./webpack/node.env');
 
 const sourceMap = require('./webpack/sourceMap');
@@ -45,8 +44,7 @@ const common = merge([
   },
   js(),
   css(),
-  favicon(),
-  webworker()
+  favicon()
 ]);
 
 module.exports = function(env, argv) {
