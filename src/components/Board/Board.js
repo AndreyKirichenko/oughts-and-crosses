@@ -38,7 +38,7 @@ const Board = (props) => {
 
 class BoardContainer extends Component {
   componentDidMount() {
-    this.interval = setTimeout(() => {
+    this.interval = setInterval(() => {
       this.props.gameLoop(this.props.game);
     }, GAME_TIMEOUT);
   }

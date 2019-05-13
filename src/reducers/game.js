@@ -40,7 +40,7 @@ const startGame = (game) => {
 };
 
 const userTurn = (game, turnData) => {
-  const { board, isUserTurns } = game;
+  const { board, isUserTurns, user } = game;
 
   if(!isUserTurns) {
     return {
@@ -48,26 +48,14 @@ const userTurn = (game, turnData) => {
     };
   }
 
-  const index = getFieldIndex(board, turnData);
-  const field = board[index];
+  const newBoard = getNewTurnBoard(board, turnData, user);
 
-  if(field.value) {
+  if(!newBoard) {
     return {
       ...game,
       message: 'This field is used!',
     };
   }
-
-  const newField = {
-    ...field,
-    value: game.user,
-  };
-
-  const newBoard = [
-    ...board.slice(0, index),
-    newField,
-    ...board.slice(index + 1),
-  ];
 
   return {
     ...game,
@@ -78,7 +66,48 @@ const userTurn = (game, turnData) => {
 };
 
 const computerTurn = (game, turnData) => {
-  console.log('!computerTurn', turnData);
+  const { board, isUserTurns, computer } = game;
+
+  if(isUserTurns) {
+    return {
+      ...game,
+    };
+  }
+
+  const newBoard = getNewTurnBoard(board, turnData, computer);
+
+  if(!newBoard) {
+    return {
+      ...game,
+    };
+  }
+
+  return {
+    ...game,
+    board: newBoard,
+    isUserTurns: true,
+    message: 'Your turn...',
+  };
+};
+
+const getNewTurnBoard = (board, turnData, fieldValue) => {
+  const index = getFieldIndex(board, turnData);
+  const field = board[index];
+
+  if(field.value) {
+    return false;
+  }
+
+  const newField = {
+    ...field,
+    value: fieldValue,
+  };
+
+  return [
+    ...board.slice(0, index),
+    newField,
+    ...board.slice(index + 1),
+  ];
 };
 
 const getFieldIndex = (board, turnData) => {

@@ -1,3 +1,5 @@
+import computer from '../services/computer';
+
 // const fetchData = (dispatch) => () => {
 //   const preloadedState = JSON.parse(window.localStorage.getItem('state'));
 // };
@@ -39,8 +41,8 @@ const startGame = () => {
 // };
 
 const gameLoop = (dispatch, game) => () => {
-  console.log('game', game);
-  dispatch(computerTurn({ x: 0, y: 0 }));
+  const newTurn = computer(game.board, game.computer);
+  dispatch(computerTurn(newTurn));
 };
 
 const userTurn = (turnData) => {
