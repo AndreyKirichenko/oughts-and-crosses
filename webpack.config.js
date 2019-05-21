@@ -54,7 +54,7 @@ module.exports = function(env, argv) {
       devserver(),
       sourceMap(),
       lintJS({ paths: PATHS.source }),
-      lintCSS(),
+      // lintCSS(),
       nodeEnv(argv.mode)
     ]);
   }
