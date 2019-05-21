@@ -45,6 +45,7 @@
   }
 }
 
+
 @keyframes winner {
   from {
     transform: scale(1, 1);
@@ -88,5 +89,26 @@
   .board__field:nth-child(8),
   .board__field:nth-child(9) {
     border-bottom-width: 0;
+  }
+}
+
+.night-theme .board__field {
+  background-color: #292925;
+  color: #ffffff;
+}
+
+.night-theme .board__field:hover {
+  background-color: #121269;
+}
+
+.night-theme .board__field--ought {
+  &:before {
+    background-image: url('/img/ought-night.svg');
+  }
+}
+
+.night-theme .board__field--cross {
+  &:before {
+    background-image: url('/img/cross-night.svg');
   }
 }
